@@ -1,8 +1,5 @@
 # README.md
 
-http://www.redotheweb.com/2013/02/20/sequelize-the-javascript-orm-in-practice.html
-http://docs.sequelizejs.com/en/latest/docs/instances/
-
 ## Installation
 
 ```bash
@@ -42,8 +39,8 @@ GET (many)		| get			| list
 
 GET operation can provide a resource id. PUT and DELETE operations ALWAYS use a resource id. In other words no bulk update or delete operations are supported.
 Currently list -or GET many- operations are the only ones supporting "querystring filtering".
+See *lib/sequelizeQueryMiddleware.js* for details on this.
 
 ### Models
 
-Models are loaded at application startup time before the rest of the module's components.
-See *lib/db.js* for more info on this.
+Models are loaded at application startup time before the rest of the module's components. To be automatically loaded a model filename *must* end in *Model.js*. See *lib/db.js* for more info on this.

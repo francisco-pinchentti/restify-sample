@@ -3,9 +3,7 @@ var UserController = function (userService) {
 };
 
 UserController.prototype.list = function (request, response, next) {
-    console.log(request.sequelizeQuery);
     return response.promise(this.userService.list(request.sequelizeQuery));
-    // response.promise(true);
 };
 
 UserController.prototype.get = function (request, response, next) {

@@ -19,7 +19,6 @@ var sqlQueryMiddleware = require('./lib/sequelizeQueryMiddleware');
 
 server
     .use(restify.queryParser())
-    // .use(restify.fullResponse())
     .use(restify.gzipResponse())
     .use(restify.bodyParser())
     .use(promiseMiddleware);
