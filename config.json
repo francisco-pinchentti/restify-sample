@@ -1,0 +1,16 @@
+{
+    "restify": {
+        "path": "127.0.0.1",
+        "port": 3000,
+        "baseUrl": "/api"
+    },
+
+    "sequelize": {
+        "database": "mdev",
+        "username" : "mdev",
+        "password": "mdev",
+        "options" : {
+            "dialect": "mariadb"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "RRESTPROTO",
+  "version": "0.0.1",
+  "description": "restify api rest prototype",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "FJP",
+  "license": "SEE LICENCE IN LICENSE.txt",
+  "dependencies": {
+    "joi": "^8.0.1",
+    "lodash": "^4.3.0",
+    "mysql": "^2.10.2",
+    "restify": "^4.0.4",
+    "sequelize": "^3.19.2"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.4.0"
+  }
+}
