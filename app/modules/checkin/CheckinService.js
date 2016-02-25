@@ -1,5 +1,5 @@
 var CheckinService = function (checkinModel) {
-  this.checkinModel = checkinModel;
+    this.checkinModel = checkinModel;
 };
 
 CheckinService.prototype.list = function () {

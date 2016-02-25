@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 var UserService = function (userModel) {
-  this.userModel = userModel;
+    this.userModel = userModel;
 };
 
 UserService.prototype.list = function (query) {

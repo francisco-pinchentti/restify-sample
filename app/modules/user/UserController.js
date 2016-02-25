@@ -1,5 +1,5 @@
 var UserController = function (userService) {
-  this.userService = userService;
+    this.userService = userService;
 };
 
 UserController.prototype.list = function (request, response, next) {
