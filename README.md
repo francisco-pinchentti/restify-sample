@@ -1,5 +1,7 @@
 # README.md
 
+Restify and sequelize REST API sample.
+
 ## Installation
 
 ```bash
@@ -12,11 +14,18 @@ npm install
 * joi
 * lodash
 * mysql
+* econsole
 * sequelize
 
 ## Configuration
 
 The main configuration file is *config.json* located inside the application root directory.
+
+## Running
+
+```bash
+npm start
+```
 
 ## Implementation notes and conventions used
 

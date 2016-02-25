@@ -1,3 +1,4 @@
+require('econsole').enhance({ level: 'TRACE', file: true});
 var _ = require('lodash');
 var restify = require('restify');
 var settings = require('./config.json');
