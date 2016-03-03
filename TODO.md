@@ -5,8 +5,12 @@
 		https://github.com/sequelize/express-example/blob/master/models/index.js
 
 * bitbucket repo
-* jsdoc user
-* grunt jsdoc task
+* jshint
+* jscs ?
+* jsdoc
+	* namespace (no base) / modules
+	* template (bootstrap)
+* grunt jsdoc task / jsdoc bash
 * modules
 * authentication (jwt, google...)
 * hosting

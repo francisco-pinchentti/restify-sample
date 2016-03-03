@@ -8,7 +8,13 @@ var server = restify.createServer();
 
 // initialize database connection
 var db = require('./lib/db.js')(settings.sequelize);
-db.sequelize.sync({ force: false }); // TODO force based on config env
+
+ // TODO force based on config env
+db.sequelize.sync({ force: true })
+.then(function(){
+    console.log('Models synced');
+    require('./lib/initialDataLoad')(db);
+});
 
 // load all application modules
 var applicationModules = require('./app/modules')(db);
@@ -74,6 +80,5 @@ _.forEach(applicationModules, function(aModule) {
 
 });
 
-// start server
-console.log('Server listening in: http://' + settings.restify.path + ':' + settings.restify.port);
+console.info('Server listening in: http://' + settings.restify.path + ':' + settings.restify.port);
 server.listen(settings.restify.port);
