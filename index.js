@@ -31,9 +31,9 @@ var promiseMiddleware = require('./lib/promiseMiddleware');
 var sqlQueryMiddleware = require('./lib/sequelizeQueryMiddleware');
 
 server
-    .use(restify.queryParser())
+    .use(restify.queryParser({ mapParams: false }))
     .use(restify.gzipResponse())
-    .use(restify.bodyParser())
+    .use(restify.bodyParser({ mapParams: false }))
     .use(promiseMiddleware);
 
 // TODO move to a module

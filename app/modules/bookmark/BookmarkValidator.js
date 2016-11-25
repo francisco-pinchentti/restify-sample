@@ -6,5 +6,13 @@ module.exports = {
             url: Joi.string().required(),
 			description: Joi.string()
         }
-    }
+    },
+	update: {
+		params: {
+			id: Joi.string()
+		},
+		body: {
+			description: Joi.string()
+		}
+	}
 };
