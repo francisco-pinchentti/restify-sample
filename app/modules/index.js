@@ -1,7 +1,15 @@
+/**
+ * @namespace modules
+ */
+/**
+* @namespace tag
+* @memberof modules
+*/
 module.exports = function (db) {
 
     return {
-        user : require('./user')(db),
-        login: require('./login')(db)
+		bookmark: require('./bookmark')(db),
+        login: require('./login')(db),
+		user: require('./user')(db)
     };
 };

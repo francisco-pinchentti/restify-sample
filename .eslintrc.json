@@ -1,0 +1,51 @@
+// https://gist.github.com/cletusw/e01a85e399ab563b1236
+{
+
+
+	"extends": "eslint:recommended",
+	"parserOptions": {
+        "ecmaVersion": 6
+    },
+	"env": {
+		"node": true
+	},
+    "rules": {
+
+		"no-debugger": 2,             // disallow use of debugger
+		"no-dupe-keys": 2,            // disallow duplicate keys when creating object literals
+		"no-extra-semi": 2,           // disallow unnecessary semicolons
+		"no-console": 0,
+
+	    ////////// Best Practices //////////
+
+	    "curly": 0,                 // specify curly brace conventions for all control statements
+		"eqeqeq": 2,                // require the use of === and !==
+		"no-eval": 1,               // disallow use of eval()
+		"no-extend-native": 2,      // disallow adding to native types
+
+	    ////////// Variables //////////
+
+	    "no-undef": 2,                    // disallow use of undeclared variables unless mentioned in a /*global */ block
+	    "no-undef-init": 1,               // disallow use of undefined when initializing variables
+	    "no-undefined": 2,                // disallow use of undefined variable (off by default)
+	    "no-unused-vars": 1,              // disallow declaration of variables that are not used in the code
+	    "no-use-before-define": 2 ,       // disallow use of variables before they are defined
+
+		////////// Stylistic Issues //////////
+
+	    "brace-style": 2,               // enforce one true brace style (off by default)
+	    "consistent-this": 0,           // enforces consistent naming when capturing the current execution context (off by default)
+	    "eol-last": 2,                  // enforce newline at the end of file, with no multiple empty lines
+	    "key-spacing": 1,               // enforces spacing between keys and values in object literal properties
+	    "new-cap": 2,                   // require a capital letter for constructors
+		"no-array-constructor": 2,      // disallow use of the Array constructor
+	    "no-mixed-spaces-and-tabs": 1,  // disallow mixed spaces and tabs for indentation
+	    "no-nested-ternary": 1,         // disallow nested ternary expressions (off by default)
+	    "no-new-object": 2,             // disallow use of the Object constructor
+	    "semi-spacing": 1,              // disallow space before semicolon
+	    "semi": 2,                      // require or disallow use of semicolons instead of ASI
+	    "space-infix-ops": 0,           // require spaces around operators
+	    "space-return-throw-case": 0,   // require a space after return, throw, and case
+	    "spaced-line-comment": 0        // require or disallow a space immediately following the // in a line comment (off by default)
+    }
+}

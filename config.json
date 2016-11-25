@@ -11,6 +11,9 @@
         "password": "mdev",
         "options" : {
             "dialect": "mariadb"
-        }
+        },
+		"sync": {
+			"force": true
+		}
     }
 }

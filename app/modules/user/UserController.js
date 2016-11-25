@@ -2,11 +2,11 @@ var UserController = function (userService) {
     this.userService = userService;
 };
 
-UserController.prototype.list = function (request, response, next) {
+UserController.prototype.list = function (request, response) {
     return response.promise(this.userService.list(request.sequelizeQuery));
 };
 
-UserController.prototype.get = function (request, response, next) {
+UserController.prototype.get = function (request, response) {
     return response.promise(Promise.resolve(
         {
             id: request.params.id
@@ -14,7 +14,7 @@ UserController.prototype.get = function (request, response, next) {
     ));
 };
 
-UserController.prototype.create = function (request, response, next) {
+UserController.prototype.create = function (request, response) {
     return response.promise(this.userService.create(request.body));
 };
 

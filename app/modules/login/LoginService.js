@@ -7,7 +7,7 @@ LoginService.prototype.login = function (email, password) {
     var self = this;
     return Promise.resolve(
         this.userModel.findOne({
-            where:{
+            where: {
                 email: email,
                 password: password
             }

@@ -1,7 +1,7 @@
 var Joi = require('joi');
 
 module.exports = {
-    get : {
+    get: {
         params: {
             id: Joi.string()
         }
@@ -9,7 +9,7 @@ module.exports = {
     list: {
         query: {
             firstname: Joi.string().max(64),
-            lastname:  Joi.string().max(64),
+            lastname: Joi.string().max(64),
             email: Joi.string().email(),
             workphone: Joi.string().max(64),
             homephone: Joi.string().max(64),
@@ -23,7 +23,7 @@ module.exports = {
     create: {
         body: {
             firstname: Joi.string().max(64).required(),
-            lastname:  Joi.string().max(64).required(),
+            lastname: Joi.string().max(64).required(),
             email: Joi.string().email().required(),
             workphone: Joi.string().max(64),
             homephone: Joi.string().max(64),

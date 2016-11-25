@@ -13,9 +13,10 @@ npm install
 * restify
 * joi
 * lodash
+* sequelizejs
 * mysql
 * econsole
-* sequelize
+* cli-table
 
 ## Configuration
 
@@ -53,3 +54,13 @@ See *lib/sequelizeQueryMiddleware.js* for details on this.
 ### Models
 
 Models are loaded at application startup time before the rest of the module's components. To be automatically loaded a model filename *must* end in *Model.js*. See *lib/db.js* for more info on this.
+
+## Misc
+
+### Documentation
+
+Generate with gulp with
+
+```bash
+gulp doc
+```
