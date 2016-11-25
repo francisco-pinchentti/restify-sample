@@ -6,5 +6,14 @@ module.exports = {
             url: Joi.string().required(),
 			description: Joi.string()
         }
-    }
+    },
+	update: {
+		params: {
+			id: Joi.number().required()
+		},
+		body: {
+			description: Joi.string(),
+			tags: Joi.array().items(Joi.number())
+		}
+	}
 };

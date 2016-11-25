@@ -9,4 +9,17 @@ BookmarkService.prototype.create = function (url, description) {
 	}).save();
 };
 
+BookmarkService.prototype.update = function (id, url, description) {
+	return this.bookmarkModel.findOne({
+		where: {
+			id: id
+		}
+	}).then( (bm) => {
+		bm.update({
+			url: url,
+			description: description
+		});
+	});
+};
+
 module.exports = BookmarkService;

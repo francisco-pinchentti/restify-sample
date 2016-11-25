@@ -5,7 +5,10 @@ module.exports = function (sequelize, DataTypes) {
 	 * @memberof modules.tag
 	 */
 	var TagModel = sequelize.define('tag', {
-		name: DataTypes.STRING,
+		name: {
+			type: DataTypes.STRING,
+			unique: true
+		},
 		description: DataTypes.STRING
 	});
 
