@@ -1,9 +1,9 @@
 /**
- * @namespace modules
+ * @namespace app
  */
 /**
 * @namespace tag
-* @memberof modules
+* @memberof app
 */
 module.exports = function (db) {
 

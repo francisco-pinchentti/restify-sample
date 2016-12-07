@@ -13,6 +13,7 @@ npm install
 * restify
 * joi
 * lodash
+* bluebird
 * sequelizejs
 * mysql
 * econsole
