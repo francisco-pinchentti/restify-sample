@@ -10,6 +10,7 @@ module.exports = function (db) {
     return {
 		bookmark: require('./bookmark')(db),
         login: require('./login')(db),
-		user: require('./user')(db)
+		user: require('./user')(db),
+		game: require('./game')(db)
     };
 };
