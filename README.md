@@ -20,6 +20,8 @@ npm install
 * bluebird
 * sequelizejs
 * econsole
+* passport-jwt
+* jwt
 * cli-table
 
 ## Configuration
@@ -60,6 +62,11 @@ GET (many)		| get			      | list
 GET operation can provide a resource id. PUT and DELETE operations ALWAYS use a resource id. In other words no bulk update or delete operations are supported.
 Currently list -or GET many- operations are the only ones supporting "querystring filtering".
 See *lib/sequelizeQueryMiddleware.js* for details on this.
+
+#### Authentication
+
+Provided via *passport-jwt*, all methods in a controller whose module has a **requiresAuth** attribute will require a JWT on the **authorization** header immediately followed by the token.
+The script *gen-token-sample.js* is provided to quickly generate a suitable token.
 
 ### Models
 

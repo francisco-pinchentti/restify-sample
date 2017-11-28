@@ -38,8 +38,29 @@ server
     .use(middlewares.promiseMiddleware);
 
 // 3. application routes setup:
+
+var passport = require('passport');
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJwt = require('passport-jwt').ExtractJwt;
+var opts = {}
+opts.jwtFromRequest = ExtractJwt.fromHeader('authorization');
+opts.secretOrKey = config.auth.secret;
+opts.jsonWebTokenOptions = config.auth.options;
+
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    db.applicationModels.user
+      .findOne({ where: { email: jwt_payload.sub } })
+      .then(function (user) {
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+        }
+    });
+}));
+
 const applicationModules = require('./app/modules')(db);
-require('./lib/setupRouting')(server, applicationModules);
+require('./lib/setupRouting')(server, applicationModules, passport);
 
 // 4. setting up info endpoint:
 const ROUTES = _.map(server.router.mounts, (route) => { return {

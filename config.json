@@ -10,6 +10,7 @@
       "useStyling": true
     }
   },
+
   "restify": {
     "path": "127.0.0.1",
     "port": 3000,
@@ -23,6 +24,13 @@
     "options" : {
       "dialect": "mariadb"
     }
+  },
 
+  "auth": {
+    "secret": "super secret!",
+    "options": {
+      "maxAge": "7d"
+    }
   }
+
 }
