@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debug": "node --inspect-brk index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc": "gulp doc",
+    "lint": "gulp lint"
   },
   "author": "FJP",
   "license": "SEE LICENCE IN LICENSE.txt",
