@@ -10,6 +10,7 @@ module.exports = function (db) {
         controller: loginController,
         service: loginService,
         validator: loginValidator,
-        resourceRoute: '/login'
+        resourceRoute: '/login',
+        requiresAuth: false
     };
 };

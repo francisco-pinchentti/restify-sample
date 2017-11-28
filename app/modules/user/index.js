@@ -12,6 +12,7 @@ module.exports = function (db) {
         model: userModel,
         service: userService,
         validator: userValidator,
-        resourceRoute: '/users'
+        resourceRoute: '/users',
+        requiresAuth: true
     };
 };

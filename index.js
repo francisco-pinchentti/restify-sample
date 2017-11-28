@@ -1,22 +1,21 @@
 /**
- * Rest API sample with restify
+ * Rest API sample with restify + sequelizeJS
  * @module main
  */
 
-const _ = require('lodash');
-const restify = require('restify');
 const config = require('./config.json');
 
 if (!!config.logging.econsole) {
   require('econsole').enhance(config.logging.econsole);
 }
 
-// loads server components:
+const _ = require('lodash');
+const restify = require('restify');
 let server = restify.createServer();
 
-// initialize database connection
-let db = require('./lib/db.js')(config.sequelize);
+// 1. db setup:
 
+let db = require('./lib/db.js')(config.sequelize); // init connection
 // TODO check app config for sync params
 db
     .sequelize
@@ -29,71 +28,20 @@ db
         });
     });
 
-// load all application modules
-var applicationModules = require('./app/modules')(db);
-
-// set server moddlewares
-const validationMiddleware = require('./lib/validationMiddleware');
-const promiseMiddleware = require('./lib/promiseMiddleware');
-const sequelizeQueryMiddleware = require('./lib/sequelizeQueryMiddleware');
+// 2. general server setup:
+const middlewares = require('./lib/middlewares');
 
 server
     .use(restify.queryParser({ mapParams: false }))
     .use(restify.gzipResponse())
     .use(restify.bodyParser({ mapParams: false }))
-    .use(promiseMiddleware);
+    .use(middlewares.promiseMiddleware);
 
-// TODO move to a module
-// bind routes (endpoints and validators) to server:
-_.forEach(applicationModules, function(aModule) {
+// 3. application routes setup:
+const applicationModules = require('./app/modules')(db);
+require('./lib/setupRouting')(server, applicationModules);
 
-    if (aModule.controller) {
-        if (aModule.controller.get && aModule.validator.get) {
-            server.get(
-                config.restify.baseUrl + aModule.resourceRoute + '/:id',
-                validationMiddleware(aModule.validator.get),
-                aModule.controller.get.bind(aModule.controller)
-            );
-        }
-
-        if (aModule.controller.delete && aModule.validator.delete) {
-            server.del(
-                config.restify.baseUrl + aModule.resourceRoute + '/:id',
-                validationMiddleware(aModule.validator.delete),
-                aModule.controller.delete.bind(aModule.controller)
-            );
-        }
-
-        if (aModule.controller.update && aModule.validator.update) {
-            server.put(
-                config.restify.baseUrl + aModule.resourceRoute + '/:id',
-                validationMiddleware(aModule.validator.update),
-                aModule.controller.update.bind(aModule.controller)
-            );
-        }
-
-        if (aModule.controller.create && aModule.validator.create) {
-            server.post(
-                config.restify.baseUrl + aModule.resourceRoute,
-                validationMiddleware(aModule.validator.create),
-                aModule.controller.create.bind(aModule.controller)
-            );
-        }
-
-        if (aModule.controller.list && aModule.validator.list) {
-            server.get(
-                config.restify.baseUrl + aModule.resourceRoute,
-                validationMiddleware(aModule.validator.list),
-                sequelizeQueryMiddleware,
-                aModule.controller.list.bind(aModule.controller)
-            );
-        }
-
-    }
-
-});
-
-// Info endpoint:
+// 4. setting up info endpoint:
 const ROUTES = _.map(server.router.mounts, (route) => { return {
     name: route.spec.name,
     path: route.spec.path,
@@ -102,9 +50,11 @@ const ROUTES = _.map(server.router.mounts, (route) => { return {
 ROUTES.push({name:'', path: config.restify.baseUrl, method: 'GET'});
 server.get(config.restify.baseUrl, (request, response) => response.json(ROUTES))
 
+// 5. log endpoint table:
 if (!config.logging.econsole) {
   require('./lib/listEndpoints')(server.router.mounts)
 }
 
+// 6. start:
 server.listen(config.restify.port);
 console.info(`Server listening in: http://${config.restify.path}:${config.restify.port}`);
