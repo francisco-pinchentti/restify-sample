@@ -3,6 +3,7 @@ var UserService = function (userModel) {
 };
 
 UserService.prototype.list = function (query) {
+    query.findAll.attributes = [ 'id', 'firstname', 'lastname', 'email' ];
     return this.userModel.findAll(query.findAll);
 };
 

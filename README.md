@@ -1,6 +1,6 @@
 # README.md
 
-Restify and sequelize REST API sample.
+A restify + sequelizejs REST API sample/project seed
 
 ## Installation
 
@@ -8,14 +8,17 @@ Restify and sequelize REST API sample.
 npm install
 ```
 
-## Direct dependencies
+### external dependencies
+
+* mysql (dev using MariaDB 10)
+
+### npm dependencies
 
 * restify
 * joi
 * lodash
 * bluebird
 * sequelizejs
-* mysql
 * econsole
 * cli-table
 
@@ -27,6 +30,12 @@ The main configuration file is *config.json* located inside the application root
 
 ```bash
 npm start
+```
+
+### Debugging
+
+```bash
+npm run debug
 ```
 
 ## Implementation notes and conventions used
@@ -41,12 +50,12 @@ Modules are mostly an association of models, services, controllers and validatio
 Each module probably will expose many endpoints. Those endpoints and their validators are automatically mapped to the server at startup time following a simple convention:
 
 http method		| restify verb	| controller method name
-----------------|---------------|-----------------------
-POST			| post			| create
-PUT				| put			| update
-DELETE			| del			| delete
-GET	(single)	| get			| get
-GET (many)		| get			| list
+--------------|---------------|-----------------------
+POST			    | post			    | create
+PUT				    | put			      | update
+DELETE			  | del			      | delete
+GET	(single)	| get			      | get
+GET (many)		| get			      | list
 
 GET operation can provide a resource id. PUT and DELETE operations ALWAYS use a resource id. In other words no bulk update or delete operations are supported.
 Currently list -or GET many- operations are the only ones supporting "querystring filtering".
@@ -54,13 +63,14 @@ See *lib/sequelizeQueryMiddleware.js* for details on this.
 
 ### Models
 
-Models are loaded at application startup time before the rest of the module's components. To be automatically loaded a model filename *must* end in *Model.js*. See *lib/db.js* for more info on this.
+Models are loaded at application startup time before the rest of the module's components.
+To be automatically loaded a model filename *must* end in *Model.js*. See *lib/db.js* for more info on this.
 
 ## Misc
 
 ### Documentation
 
-Generate with gulp with
+Generate with gulp (gulp-cli must installed globally) with:
 
 ```bash
 gulp doc

@@ -3,32 +3,39 @@
  * @module main
  */
 
-// TODO load from config, conflicts with endpoints table display
-// require('econsole').enhance({ level: 'TRACE', file: true});
-
 const _ = require('lodash');
 const restify = require('restify');
-const settings = require('./config.json');
+const config = require('./config.json');
+
+if (!!config.logging.econsole) {
+  require('econsole').enhance(config.logging.econsole);
+}
 
 // loads server components:
-var server = restify.createServer();
+let server = restify.createServer();
 
 // initialize database connection
-var db = require('./lib/db.js')(settings.sequelize);
+let db = require('./lib/db.js')(config.sequelize);
 
-db.sequelize.sync(settings.sequelize.sync)
-.then(function(){
-    console.log('Models synced');
-    require('./lib/initialDataLoad')(db);
-});
+// TODO check app config for sync params
+db
+    .sequelize
+    .query('SET FOREIGN_KEY_CHECKS = 0', {raw: true})
+    .then(function(results) {
+        db.sequelize
+        .sync({force: true})
+        .then(function() {
+          require('./lib/initialDataLoad')(db);
+        });
+    });
 
 // load all application modules
 var applicationModules = require('./app/modules')(db);
 
 // set server moddlewares
-var validationMiddleware = require('./lib/validationMiddleware');
-var promiseMiddleware = require('./lib/promiseMiddleware');
-var sqlQueryMiddleware = require('./lib/sequelizeQueryMiddleware');
+const validationMiddleware = require('./lib/validationMiddleware');
+const promiseMiddleware = require('./lib/promiseMiddleware');
+const sequelizeQueryMiddleware = require('./lib/sequelizeQueryMiddleware');
 
 server
     .use(restify.queryParser({ mapParams: false }))
@@ -43,7 +50,7 @@ _.forEach(applicationModules, function(aModule) {
     if (aModule.controller) {
         if (aModule.controller.get && aModule.validator.get) {
             server.get(
-                settings.restify.baseUrl + aModule.resourceRoute + '/:id',
+                config.restify.baseUrl + aModule.resourceRoute + '/:id',
                 validationMiddleware(aModule.validator.get),
                 aModule.controller.get.bind(aModule.controller)
             );
@@ -51,7 +58,7 @@ _.forEach(applicationModules, function(aModule) {
 
         if (aModule.controller.delete && aModule.validator.delete) {
             server.del(
-                settings.restify.baseUrl + aModule.resourceRoute + '/:id',
+                config.restify.baseUrl + aModule.resourceRoute + '/:id',
                 validationMiddleware(aModule.validator.delete),
                 aModule.controller.delete.bind(aModule.controller)
             );
@@ -59,7 +66,7 @@ _.forEach(applicationModules, function(aModule) {
 
         if (aModule.controller.update && aModule.validator.update) {
             server.put(
-                settings.restify.baseUrl + aModule.resourceRoute + '/:id',
+                config.restify.baseUrl + aModule.resourceRoute + '/:id',
                 validationMiddleware(aModule.validator.update),
                 aModule.controller.update.bind(aModule.controller)
             );
@@ -67,7 +74,7 @@ _.forEach(applicationModules, function(aModule) {
 
         if (aModule.controller.create && aModule.validator.create) {
             server.post(
-                settings.restify.baseUrl + aModule.resourceRoute,
+                config.restify.baseUrl + aModule.resourceRoute,
                 validationMiddleware(aModule.validator.create),
                 aModule.controller.create.bind(aModule.controller)
             );
@@ -75,9 +82,9 @@ _.forEach(applicationModules, function(aModule) {
 
         if (aModule.controller.list && aModule.validator.list) {
             server.get(
-                settings.restify.baseUrl + aModule.resourceRoute,
+                config.restify.baseUrl + aModule.resourceRoute,
                 validationMiddleware(aModule.validator.list),
-                sqlQueryMiddleware,
+                sequelizeQueryMiddleware,
                 aModule.controller.list.bind(aModule.controller)
             );
         }
@@ -85,6 +92,19 @@ _.forEach(applicationModules, function(aModule) {
     }
 
 });
-console.info('Server listening in: http://' + settings.restify.path + ':' + settings.restify.port);
-server.listen(settings.restify.port);
-require('./lib/listEndpoints')(server.router.mounts);
+
+// Info endpoint:
+const ROUTES = _.map(server.router.mounts, (route) => { return {
+    name: route.spec.name,
+    path: route.spec.path,
+    method: route.spec.method
+    }});
+ROUTES.push({name:'', path: config.restify.baseUrl, method: 'GET'});
+server.get(config.restify.baseUrl, (request, response) => response.json(ROUTES))
+
+if (!config.logging.econsole) {
+  require('./lib/listEndpoints')(server.router.mounts)
+}
+
+server.listen(config.restify.port);
+console.info(`Server listening in: http://${config.restify.path}:${config.restify.port}`);

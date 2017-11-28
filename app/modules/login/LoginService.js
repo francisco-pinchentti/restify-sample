@@ -3,6 +3,8 @@ var LoginService = function (loginModel, userModel) {
     this.userModel = userModel;
 };
 
+const MOCK_TOKEN = 'xzKyP1';
+
 LoginService.prototype.login = function (email, password) {
     let self = this;
     return this.userModel.findOne({
@@ -13,7 +15,12 @@ LoginService.prototype.login = function (email, password) {
     })
     .then(function(user) {
         if (user) {
-            return self.loginModel.build({ email: user.email}).save();
+            return self.loginModel
+              .build({
+                  email: user.email,
+                  token: MOCK_TOKEN
+              })
+              .save();
         }
         throw new Error('Invalid login');
     });

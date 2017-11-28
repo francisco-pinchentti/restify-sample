@@ -1,19 +1,28 @@
 {
-    "restify": {
-        "path": "127.0.0.1",
-        "port": 3000,
-        "baseUrl": "/api"
-    },
 
-    "sequelize": {
-        "database": "mdev",
-        "username" : "mdev",
-        "password": "mdev",
-        "options" : {
-            "dialect": "mariadb"
-        },
-		"sync": {
-			"force": true
-		}
+  "logging": {
+    "econsole": {
+      "level":"ALL",
+      "file": true,
+      "filepath": "app.log",
+      "includeDate": true,
+      "showSourceInfo": true,
+      "useStyling": true
     }
+  },
+  "restify": {
+    "path": "127.0.0.1",
+    "port": 3000,
+    "baseUrl": "/api"
+  },
+
+  "sequelize": {
+    "database": "mdev_api",
+    "username" : "mdev",
+    "password": "mdev",
+    "options" : {
+      "dialect": "mariadb"
+    }
+
+  }
 }
