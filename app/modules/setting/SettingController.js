@@ -1,11 +1,13 @@
-var Promise = require('bluebird');
+class SettingController {
 
-var SettingController = function (settingService) {
-    this.settingService = settingService;
-};
+    constructor (settingService) {
+        this.settingService = settingService;
+    }
 
-SettingController.prototype.list = function (request, response) {
-    return response.promise(this.settingService.list(request.sequelizeQuery));
-};
+    list (request, response) {
+        return response.promise(this.settingService.list(request.sequelizeQuery));
+    }
+
+}
 
 module.exports = SettingController;

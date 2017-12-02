@@ -1,11 +1,15 @@
-var UserService = require('./UserService');
-var UserController = require('./UserController');
+/**
+ * @module user
+ */
+
+const UserService = require('./UserService');
+const UserController = require('./UserController');
 
 module.exports = function (db) {
-    var userModel = db.applicationModels.user;
-    var userService = new UserService(userModel);
-    var userController = new UserController(userService);
-    var userValidator = require('./UserValidator');
+    const userModel = db.applicationModels.user;
+    const userService = new UserService(userModel);
+    const userController = new UserController(userService);
+    const userValidator = require('./UserValidator');
 
     return {
         controller: userController,

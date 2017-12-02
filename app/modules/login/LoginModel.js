@@ -1,7 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
 
-  var LoginModel = sequelize.define('login', {
-  token: DataTypes.STRING
+  let LoginModel = sequelize.define('login', {
+    token: DataTypes.STRING
   });
 
   /**

@@ -1,9 +1,13 @@
-var LoginController = function (loginService) {
-    this.loginService = loginService;
-};
+class LoginController {
 
-LoginController.prototype.create = function (request, response) {
-    return response.promise(this.loginService.login(request.body.email, request.body.password));
-};
+    constructor (loginService) {
+        this.loginService = loginService;
+    }
+
+    create (request, response) {
+        return response.promise(this.loginService.login(request.body.email, request.body.password));
+    }
+
+}
 
 module.exports = LoginController;

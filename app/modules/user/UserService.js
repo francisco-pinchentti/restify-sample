@@ -1,20 +1,17 @@
-var UserService = function (userModel) {
-    this.userModel = userModel;
-};
+class UserService {
 
-UserService.prototype.list = function (query) {
-    query.findAll.attributes = [ 'id', 'firstname', 'lastname', 'email' ];
-    return this.userModel.findAll(query.findAll);
-};
+    constructor (userModel) {
+        this.userModel = userModel;
+    }
 
-// UserService.prototype.get = function (id) { };
+    list (query) {
+        query.findAll.attributes = [ 'id', 'firstname', 'lastname', 'email' ];
+        return this.userModel.findAll(query.findAll);
+    }
 
-UserService.prototype.create = function (newUserData) {
-    return this.userModel.build(newUserData).save();
-};
-
-// UserService.prototype.delete = function (id) { };
-
-// UserService.prototype.update = function (id, newData) { };
+    create (newUserData) {
+        return this.userModel.build(newUserData).save();
+    }
+}
 
 module.exports = UserService;

@@ -4,7 +4,7 @@ const eslint = require('gulp-eslint');
 
 gulp.task('doc', (cb) => {
     const config = require('./jsdoc.json');
-    gulp.src(['README.md', 'index.js', './app/**/*.js', './lib/*.js'], {read: false})
+    gulp.src(['README.md', 'index.js', './app/**/*.js', './lib/**/*.js'], {read: false})
         .pipe(jsdoc(config, cb));
 });
 
@@ -13,7 +13,7 @@ gulp.task('lint', () => {
     // So, it's best to have gulp ignore the directory as well.
     // Also, Be sure to return the stream from the task;
     // Otherwise, the task may end before the stream has finished.
-    return gulp.src(['./index.js', './app/**/*.js', './lib/*.js'])
+    return gulp.src(['./index.js', './app/**/*.js', './lib/**/*.js'])
         // eslint() attaches the lint output to the "eslint" property
         // of the file object so it can be used by other modules.
         .pipe(eslint())

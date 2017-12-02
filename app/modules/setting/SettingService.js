@@ -1,9 +1,12 @@
-let SettingService = function (settingModel) {
-    this.settingModel = settingModel;
-};
+class SettingService {
 
-SettingService.prototype.list = function () {
-    return this.settingModel.findOne();
-};
+    constructor (settingModel) {
+        this.settingModel = settingModel;
+    }
+
+    list () {
+        return this.settingModel.findOne();
+    }
+}
 
 module.exports = SettingService;

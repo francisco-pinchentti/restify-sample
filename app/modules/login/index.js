@@ -1,10 +1,14 @@
-var LoginService = require('./LoginService');
-var LoginController = require('./LoginController');
+/**
+ * @module login
+ */
+
+const LoginService = require('./LoginService');
+const LoginController = require('./LoginController');
 
 module.exports = function (db) {
-    var loginService = new LoginService(db.applicationModels.login, db.applicationModels.user);
-    var loginController = new LoginController(loginService);
-    var loginValidator = require('./LoginValidator');
+    const loginService = new LoginService(db.applicationModels.login, db.applicationModels.user);
+    const loginController = new LoginController(loginService);
+    const loginValidator = require('./LoginValidator');
 
     return {
         controller: loginController,

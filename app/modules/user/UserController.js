@@ -1,26 +1,26 @@
-var Promise = require('bluebird');
+const Promise = require('bluebird');
 
-var UserController = function (userService) {
-    this.userService = userService;
-};
+class UserController {
 
-UserController.prototype.list = function (request, response) {
-    return response.promise(this.userService.list(request.sequelizeQuery));
-};
+    constructor (userService) {
+        this.userService = userService;
+    }
 
-UserController.prototype.get = function (request, response) {
-	return response.promise(new Promise( (resolve) => {
-			return resolve({ id: request.params.id });
-		})
-	);
-};
+    list (request, response) {
+        return response.promise(this.userService.list(request.sequelizeQuery));
+    }
 
-UserController.prototype.create = function (request, response) {
-    return response.promise(this.userService.create(request.body));
-};
+    get (request, response) {
+        return response.promise(new Promise( (resolve) => {
+                return resolve({ id: request.params.id });
+            })
+        );
+    }
 
-// UserController.prototype.delete = function (request, response, next) { };
+    create (request, response) {
+        return response.promise(this.userService.create(request.body));
+    }
 
-// UserController.prototype.update = function (request, response, next) { };
+}
 
 module.exports = UserController;
