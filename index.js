@@ -20,12 +20,10 @@ let db = require('./lib/db.js')(config.sequelize); // init connection
 db
     .sequelize
     .query('SET FOREIGN_KEY_CHECKS = 0', {raw: true})
-    .then(function(results) {
+    .then(() => {
         db.sequelize
-        .sync({force: true})
-        .then(function() {
-          require('./lib/initialDataLoad')(db);
-        });
+        .sync({ force: true })
+        .then( () => require('./lib/initialDataLoad')(db) );
     });
 
 // 2. general server setup:
@@ -42,7 +40,7 @@ server
 var passport = require('passport');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
-var opts = {}
+var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromHeader('authorization');
 opts.secretOrKey = config.auth.secret;
 opts.jsonWebTokenOptions = config.auth.options;
@@ -63,17 +61,19 @@ const applicationModules = require('./app/modules')(db);
 require('./lib/setupRouting')(server, applicationModules, passport);
 
 // 4. setting up info endpoint:
-const ROUTES = _.map(server.router.mounts, (route) => { return {
-    name: route.spec.name,
-    path: route.spec.path,
-    method: route.spec.method
-    }});
-ROUTES.push({name:'', path: config.restify.baseUrl, method: 'GET'});
-server.get(config.restify.baseUrl, (request, response) => response.json(ROUTES))
+const ROUTES = _.map(server.router.mounts, (route) => {
+    return {
+        name: route.spec.name,
+        path: route.spec.path,
+        method: route.spec.method
+    };
+});
+ROUTES.push({ name: '', path: config.restify.baseUrl, method: 'GET' });
+server.get(config.restify.baseUrl, (request, response) => response.json(ROUTES));
 
 // 5. log endpoint table:
 if (!config.logging.econsole) {
-  require('./lib/listEndpoints')(server.router.mounts)
+  require('./lib/listEndpoints')(server.router.mounts);
 }
 
 // 6. start:

@@ -82,3 +82,13 @@ Generate with gulp (gulp-cli must installed globally) with:
 ```bash
 gulp doc
 ```
+
+On windows, you may need to run:
+
+```cmd
+npm link gulp-eslint
+npm link gulp-util
+npm link eslint
+```
+
+To enable gulp tasks to run.
